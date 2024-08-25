@@ -3,20 +3,17 @@ const containerCards = document.querySelector(".cards-container")
 const btnGenerateCard = document.querySelector("#generate-card")
 const btnGenerateMultiple = document.querySelector("#generate-multiple")
 
-const generateCards = () => {
-  let counter = parseInt(prompt("¿cuantas cards deseas crear?"))
-  for (let index = 1; index <= counter; index++) {
-    getCharacter()
-  }
-}
+const getCharacter =async () =>{
 
-const getCharacter = async () => {
-  const Response = await fetch(url)
-  const data = await Response.json()
-
+  const response = await fetch(url)
+  const data = await response.json()
   makeCharacter(data[0])
+
 }
 
+fetch(url)
+.then(response => response.json())
+.then(data => console.log(data))
 
 
 const makeCharacter = (myCharacter) => {
@@ -25,7 +22,7 @@ const makeCharacter = (myCharacter) => {
   card.classList.add("card")
 
   const imgCard = document.createElement("img")
-  imgCard.src = myCharacter.image 
+  imgCard.src = myCharacter.image
   imgCard.alt = myCharacter.character
 
   const cardContent = document.createElement("div")
@@ -39,6 +36,9 @@ const makeCharacter = (myCharacter) => {
 
   card.appendChild(imgCard)
   card.appendChild(cardContent)
+
+  cardContent.appendChild(nameCard)
+  cardContent.appendChild(quoteCard)
 
   containerCards.appendChild(card)
 }
